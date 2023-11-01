@@ -2,10 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ArticleModule } from '../article/article.module';
-import {ConfigModule, ConfigService} from "@nestjs/config";
-import configurations from '../../configurations'
-import { SequelizeModule } from "@nestjs/sequelize";
-import {Article} from "../article/models/article.model";
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import configurations from '../../configurations';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Article } from '../article/models/article.model';
+import { Comment } from '../comment/models/comment.model';
+import { CommentModule } from '../comment/comment.module';
 
 @Module({
   imports: [
@@ -17,7 +19,7 @@ import {Article} from "../article/models/article.model";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        dialect: "postgres",
+        dialect: 'postgres',
         host: configService.get('db_host'),
         port: configService.get('db_port'),
         database: configService.get('db_name'),
@@ -25,10 +27,12 @@ import {Article} from "../article/models/article.model";
         password: configService.get('db_password'),
         synchronize: true,
         autoLoadModels: true,
-        models: [Article],
-      })
+        models: [Article, Comment],
+      }),
     }),
-    ArticleModule],
+    ArticleModule,
+    CommentModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

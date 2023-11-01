@@ -1,18 +1,20 @@
-import {AutoIncrement, Column, Model, PrimaryKey, Table} from "sequelize-typescript";
+import { Column, HasMany, Model, Table } from 'sequelize-typescript';
+import { Comment } from '../../comment/models/comment.model';
 
 @Table
 export class Article extends Model {
-    @Column({
-        primaryKey: true,
-        autoIncrement: true
-    })
-    id: number
-    @Column
-    name: string
-    @Column
-    text: string
-    // @Column
-    // createdAt: Date
-    // @Column
-    // updatedAt: Date
+  @Column({
+    primaryKey: true,
+    autoIncrement: true,
+  })
+  id: number;
+  @Column
+  name: string;
+  @Column
+  text: string;
+  @HasMany(() => Comment, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  commentList: Comment[];
 }
