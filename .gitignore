@@ -33,3 +33,28 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# /articles-frontend/
+/articles-frontend/.DS_Store
+/articles-frontend/node_modules
+/articles-frontend/dist
+
+
+# local env files
+/articles-frontend/.env.local
+/articles-frontend/.env.*.local
+
+# Log files
+/articles-frontend/npm-debug.log*
+/articles-frontend/yarn-debug.log*
+/articles-frontend/yarn-error.log*
+/articles-frontend/pnpm-debug.log*
+
+# Editor directories and files
+/articles-frontend/.idea
+/articles-frontend/.vscode
+/articles-frontend/*.suo
+/articles-frontend/*.ntvs*
+/articles-frontend/*.njsproj
+/articles-frontend/*.sln
+/articles-frontend/*.sw?
