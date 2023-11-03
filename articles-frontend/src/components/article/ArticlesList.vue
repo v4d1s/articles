@@ -1,6 +1,5 @@
 <template>
-  <!--  TODO IF-ELSE-->
-  <div v-if="articles.data !== undefined">
+  <div v-if="articles.length !== 0">
     <div v-for="article in articles.data" v-bind:key="article.id">
       <div class="article" style="overflow-wrap: break-word">
         <div style="display: flex; justify-content: space-between;">
@@ -12,7 +11,7 @@
     </div>
   </div>
   <div v-else>
-    <h2 class="errorMessage">Статьи отустствует!</h2>
+    <h2>Статьи отустствуют!</h2>
   </div>
 </template>
 
@@ -22,7 +21,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      articles: []
+      articles: [],
     }
   },
   methods: {
@@ -32,7 +31,7 @@ export default {
         method: 'get',
       })
       // console.log(articles)
-      if (articles.data != null) {
+      if (articles.data.length > 0) {
         this.articles = articles
       }
     }
@@ -50,8 +49,5 @@ export default {
   margin-top: 15px;
   display: inline-block;
   width: 100%;
-}
-.errorMessage {
-  color: red;
 }
 </style>

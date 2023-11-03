@@ -42,16 +42,15 @@ export default {
       }
     },
     async deleteComment() {
-      // TODO Удаление коммента
-      // await axios({
-      //   url: 'http://localhost:3000/article/' + this.$route.params.id,
-      //   method: 'delete',
-      // })
-      // this.$router.push('/articles/')
+      await axios({
+        url: 'http://localhost:3000/article/' + this.$route.params.id
+          + '/comment/' + this.$route.params.commentId,
+        method: 'delete',
+      })
+      this.$router.push('/article/' + this.$route.params.id)
     },
     showEditComment() {
-      // TODO Изменение коммента
-      // this.dialogVisible = true
+      this.dialogVisible = true
     },
 
   },

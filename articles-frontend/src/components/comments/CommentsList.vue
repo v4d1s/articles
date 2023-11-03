@@ -1,6 +1,5 @@
 <template>
-<!--  TODO IF-ELSE-->
-  <div v-if="comments.data !== undefined">
+  <div v-if="comments.length !== 0">
     <div v-for="comment in comments.data" v-bind:key="comment.id">
       <div class="comment" style="overflow-wrap: break-word">
         <div style="display: flex; justify-content: space-between;">
@@ -22,7 +21,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      comments: []
+      comments: [],
     }
   },
   methods: {
@@ -33,10 +32,9 @@ export default {
         method: 'get',
       })
       // console.log(comments.data)
-      if (comments.data != null) {
+      if (comments.data.length > 0) {
         this.comments = comments
       }
-      // console.log(this.comments.data)
     }
   },
   mounted() {
