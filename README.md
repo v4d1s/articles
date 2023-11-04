@@ -2,8 +2,14 @@
 
 ```bash
 $ npm install
+```
+```bash
 $ cd .\articles-frontend\
+```
+```bash
 $ npm install
+```
+```bash
 $ cd ..
 ```
 
@@ -11,6 +17,8 @@ $ cd ..
 
 ```bash
 $ docker-compose up
+```
+```bash
 $ npm run start:dev
 ```
 
@@ -19,5 +27,7 @@ $ npm run start:dev
 
 ```bash
 $ cd .\articles-frontend\
+```
+```bash
 $ npm run serve
 ```
