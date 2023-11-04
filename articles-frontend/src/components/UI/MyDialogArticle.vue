@@ -2,8 +2,7 @@
   <div class="dialog" v-if="show" @click.stop="hideDialog">
     <div @click.stop class="dialog__content">
       <article-form
-        @create="editArticle"
-        :articleDate="articleData"
+        :edit-data="true"
       />
     </div>
   </div>
@@ -11,7 +10,6 @@
 
 <script>
 import ArticleForm from "@/components/article/ArticleForm.vue";
-import axios from "axios";
 export default {
   components: {ArticleForm},
   name: 'my-dialog-article',
@@ -21,33 +19,11 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      articleData: {
-        name: '',
-        text: '',
-      },
-    }
-  },
   methods: {
     hideDialog() {
       this.$emit('update:show', false)
     },
-    async editArticle(article) {
-      const articleId = this.$route.params.id
-      this.articleData.name = article.name
-      this.articleData.text = article.text
-      await axios({
-        url: 'http://localhost:3000/article/' + articleId,
-        method: 'patch',
-        data: {
-          name: this.articleData.name,
-          text: this.articleData.text
-        }
-      })
-      this.$router.push('/article/' + articleId)
-    }
-  }
+  },
 };
 </script>
 

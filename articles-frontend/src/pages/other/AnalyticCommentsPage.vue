@@ -4,7 +4,9 @@
     <VueDatePicker range style="margin-top: 10px; width: 60%" v-model="date"></VueDatePicker>
     <button class="btn" @click="showComments">Готово</button>
   </div>
-  <div v-if="(date && isClicked) || (dateTo !== null && dateFrom !== null)">
+  <div v-if="(date && isClicked) ||
+  (this.$route.query.dateFrom !== undefined && this.$route.query.dateTo !== undefined)
+  ">
     <comments-list
       :have-date="true"
     />
@@ -21,8 +23,6 @@ export default {
     return {
       date: null,
       isClicked: false,
-      dateTo: null,
-      dateFrom: null,
     }
   },
   methods: {
@@ -37,16 +37,7 @@ export default {
         + this.date[1].toISOString())
         .then(() => { this.$router.go() })
     },
-    async getDates() {
-      if (this.$route.query.dateFrom && this.$route.query.dateTo) {
-        this.dateFrom = this.$route.query.dateFrom
-        this.dateTo = this.$route.query.dateTo
-      }
-    }
   },
-  mounted() {
-    this.getDates()
-  }
 };
 </script>
 

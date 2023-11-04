@@ -9,7 +9,6 @@ import CommentItem from "@/components/comments/CommentItem.vue";
 
 export default {
   components: { CommentItem }
-
 };
 </script>
 

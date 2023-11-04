@@ -16,24 +16,17 @@
 </template>
 
 <script>
-import axios from "axios";
-
+import { mapActions, mapState } from "vuex";
 export default {
-  data() {
-    return {
-      articles: [],
-    }
-  },
   methods: {
-    async getArticles() {
-      const articles = await axios({
-        url: 'http://localhost:3000/articles/',
-        method: 'get',
-      })
-      if (articles.data.length > 0) {
-        this.articles = articles
-      }
-    }
+    ...mapActions({
+      getArticles: 'articleList/getArticles',
+    }),
+  },
+  computed: {
+    ...mapState({
+      articles: state => state.articleList.articles,
+    }),
   },
   mounted() {
     this.getArticles()

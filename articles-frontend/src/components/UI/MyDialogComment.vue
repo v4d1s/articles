@@ -2,8 +2,7 @@
   <div class="dialog" v-if="show" @click.stop="hideDialog">
     <div @click.stop class="dialog__content">
       <comment-form
-        @create="editComment"
-        :commentDate="commentData"
+        :edit-data="true"
         style="width: 95%"
       />
     </div>
@@ -11,7 +10,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import CommentForm from "@/components/comments/CommentForm.vue";
 export default {
   components: { CommentForm},
@@ -22,30 +20,10 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      commentData: {
-        text: '',
-      },
-    }
-  },
   methods: {
     hideDialog() {
       this.$emit('update:show', false)
     },
-    async editComment(comment) {
-      const articleId = this.$route.params.id
-      const commentId = this.$route.params.commentId
-      this.commentData.text = comment.text
-      await axios({
-        url: 'http://localhost:3000/article/' + articleId + '/comment/' + commentId,
-        method: 'patch',
-        data: {
-          text: this.commentData.text
-        }
-      })
-      this.$router.push('/article/' + '/comment/' + commentId)
-    }
   }
 };
 </script>

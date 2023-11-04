@@ -6,7 +6,9 @@
     ></my-dialog-comment>
     <div>
       <button class="btn-edit" @click="showEditComment">Изменить</button>
-      <button class="btn-delete" @click="deleteComment">Удалить</button>
+      <button class="btn-delete" @click="deleteComment(
+        {id: this.$route.params.id, commentId: this.$route.params.commentId}
+        )">Удалить</button>
     </div>
   </div>
   <div v-else>
@@ -15,46 +17,31 @@
 </template>
 
 <script>
-import axios from "axios";
 import MyDialogComment from "@/components/UI/MyDialogComment.vue";
+import { mapActions, mapState } from "vuex";
 export default {
   components: { MyDialogComment },
   data() {
     return {
-      comment: {
-        id: '',
-        text: '',
-      },
       dialogVisible: false
     }
   },
   methods: {
-    async getComment() {
-      const comment = await axios({
-        url: 'http://localhost:3000/article/' + this.$route.params.id +
-          '/comment/' + this.$route.params.commentId,
-        method: 'get',
-      })
-      if (comment.data != null) {
-        this.comment.id = comment.data.id
-        this.comment.text = comment.data.text
-      }
-    },
-    async deleteComment() {
-      await axios({
-        url: 'http://localhost:3000/article/' + this.$route.params.id
-          + '/comment/' + this.$route.params.commentId,
-        method: 'delete',
-      })
-      this.$router.push('/article/' + this.$route.params.id)
-    },
+    ...mapActions({
+      getComment: "commentItem/getComment",
+      deleteComment: "commentItem/deleteComment",
+    }),
     showEditComment() {
       this.dialogVisible = true
     },
-
+  },
+  computed: {
+    ...mapState({
+      comment: state => state.commentItem.comment,
+    }),
   },
   mounted() {
-    this.getComment()
+    this.getComment({id: this.$route.params.id, commentId: this.$route.params.commentId})
   },
 };
 </script>

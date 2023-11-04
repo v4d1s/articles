@@ -7,7 +7,7 @@
     ></my-dialog-article>
     <div>
       <button class="btn-edit" @click="showEditArticle">Изменить</button>
-      <button class="btn-delete" @click="deleteArticle">Удалить</button>
+      <button class="btn-delete" @click="deleteArticle(this.$route.params.id)">Удалить</button>
     </div>
   </div>
   <div v-else>
@@ -16,46 +16,31 @@
 </template>
 
 <script>
-import axios from "axios";
 import MyDialogArticle from "@/components/UI/MyDialogArticle.vue";
+import { mapActions, mapState } from "vuex";
 export default {
   components: { MyDialogArticle },
   data() {
     return {
-      article: {
-        id: '',
-        name: '',
-        text: '',
-      },
       dialogVisible: false
     }
   },
   methods: {
-    async getArticle() {
-      const article = await axios({
-        url: 'http://localhost:3000/article/' + this.$route.params.id,
-        method: 'get',
-      })
-      if (article.data != null) {
-        this.article.id = article.data.id
-        this.article.name = article.data.name
-        this.article.text = article.data.text
-      }
-    },
-    async deleteArticle() {
-      await axios({
-        url: 'http://localhost:3000/article/' + this.$route.params.id,
-        method: 'delete',
-      })
-      this.$router.push('/articles/')
-    },
+    ...mapActions({
+      getArticle: 'articleItem/getArticle',
+      deleteArticle: 'articleItem/deleteArticle'
+    }),
     showEditArticle() {
       this.dialogVisible = true
     },
-
+  },
+  computed: {
+    ...mapState({
+      article: state => state.articleItem.article,
+    }),
   },
   mounted() {
-    this.getArticle()
+    this.getArticle(this.$route.params.id)
   },
 };
 </script>

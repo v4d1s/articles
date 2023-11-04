@@ -5,26 +5,44 @@
       class="input"
       placeholder="Комментарий"
     ></textarea>
-    <button
-      class="btn"
-      @click="createComment"
-    >Готово</button>
+    <div v-if="editData">
+      <button
+        class="btn"
+        @click="editComment({
+        id: this.$route.params.id,
+        commentId: this.$route.params.commentId
+        })"
+      >Изменить</button>
+    </div>
+    <div v-else>
+      <button
+        class="btn"
+        @click="createComment(this.$route.params.id)"
+      >Создать</button>
+    </div>
   </form>
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
-  data() {
-    return {
-      commentData: {
-        text: '',
-      },
+  props: {
+    editData: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
-    createComment() {
-      this.$emit('create', this.commentData)
-    }
+    ...mapActions({
+      createComment: "commentForm/createComment",
+      editComment: "commentForm/editComment",
+    }),
+  },
+  computed: {
+    ...mapState({
+      commentData: state => state.commentForm.commentData
+    })
   }
 };
 </script>

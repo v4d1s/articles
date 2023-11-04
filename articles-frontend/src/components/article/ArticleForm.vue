@@ -6,27 +6,41 @@
       class="input"
       placeholder="Текст статьи"
     ></textarea>
-    <button
-      class="btn"
-      @click="createArticle"
-    >Готово</button>
+    <div v-if="editData">
+      <button
+        class="btn"
+        @click="editArticle(this.$route.params.id)"
+      >Изменить</button>
+    </div>
+    <div v-else>
+      <button
+        class="btn"
+        @click="createArticle"
+      >Создать</button>
+    </div>
   </form>
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
-  data() {
-    return {
-      articleData: {
-        name: '',
-        text: '',
-      },
+  props: {
+    editData: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
-    createArticle() {
-      this.$emit('create', this.articleData)
-    }
+    ...mapActions({
+      createArticle: "articleForm/createArticle",
+      editArticle: "articleForm/editArticle",
+    }),
+  },
+  computed: {
+    ...mapState({
+      articleData: state => state.articleForm.articleData
+    })
   }
 };
 </script>

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions, mapState } from "vuex";
 
 export default {
   props: {
@@ -31,32 +31,25 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      comments: [],
-    }
-  },
   methods: {
-    async getComments() {
-      let comments
-      if (!this.haveDate) {
-        comments = await axios({
-          url: 'http://localhost:3000/article/' + this.$route.params.id + '/comments/',
-          method: 'get',
-        })
-      } else {
-        comments = await axios({
-          url: 'http://localhost:3000/analytic/comments/?dateFrom=' + this.$route.query.dateFrom + '&dateTo=' + this.$route.query.dateTo,
-          method: 'get',
-        })
-      }
-      if (comments.data.length > 0) {
-        this.comments = comments
-      }
-    },
+    ...mapActions({
+      getComments: 'commentsList/getComments',
+    }),
+  },
+  computed: {
+    ...mapState({
+      comments: state => state.commentsList.comments,
+    }),
   },
   mounted() {
-    this.getComments()
+    this.getComments({
+      id: this.$route.params.id,
+      haveDate: this.haveDate,
+      // dateFrom: (typeof this.$route.query.dateFrom !== 'undefined') ? this.$route.query.dateFrom : '',
+      // dateTo: (typeof this.$route.query.dateTo !== 'undefined') ? this.$route.query.dateTo : '',
+      dateFrom: this.$route.query.dateFrom,
+      dateTo: this.$route.query.dateTo,
+    })
   },
 };
 </script>
