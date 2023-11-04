@@ -36,7 +36,6 @@ export default {
         url: 'http://localhost:3000/article/' + this.$route.params.id,
         method: 'get',
       })
-      // console.log(article)
       if (article.data != null) {
         this.article.id = article.data.id
         this.article.name = article.data.name

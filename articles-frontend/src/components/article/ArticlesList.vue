@@ -30,7 +30,6 @@ export default {
         url: 'http://localhost:3000/articles/',
         method: 'get',
       })
-      // console.log(articles)
       if (articles.data.length > 0) {
         this.articles = articles
       }

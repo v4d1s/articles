@@ -35,7 +35,6 @@ export default {
           '/comment/' + this.$route.params.commentId,
         method: 'get',
       })
-      // console.log(article)
       if (comment.data != null) {
         this.comment.id = comment.data.id
         this.comment.text = comment.data.text

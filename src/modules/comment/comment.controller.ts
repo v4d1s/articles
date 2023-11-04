@@ -31,9 +31,7 @@ export class CommentController {
 
   @Post('comment')
   async createComment(@Body() dto: CreateCommentDTO, @Param() params: any) {
-    // console.log(dto);
     const article = await this.articleService.getArticleById(params.id);
-    // console.log(article);
     if (!article) {
       throw new BadRequestException('This article does not exist');
     }

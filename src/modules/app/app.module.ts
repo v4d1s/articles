@@ -8,6 +8,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Article } from '../article/models/article.model';
 import { Comment } from '../comment/models/comment.model';
 import { CommentModule } from '../comment/comment.module';
+import { AnalyticModule } from '../analytic/analytic.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CommentModule } from '../comment/comment.module';
     }),
     ArticleModule,
     CommentModule,
+    AnalyticModule,
   ],
   controllers: [AppController],
   providers: [AppService],
